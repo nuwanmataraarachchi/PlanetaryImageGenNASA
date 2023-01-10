@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NASA Image of the Day</title>
+    <style>
+      /* Some basic styling for the button, image and image explanation*/
+      button {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+      }
+      img {
+        width: 30%; /* smaller image */
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        }
+
+      #image-explanation{
+        font-size: 0.9rem;
+        text-align:center;
+        margin-top: 10px;
+      }
+      body {
+        background-color: #f2f2f2; /* Light gray color */
+        }
+        img {
+        border: 1px solid #ccc; /* Gray border */
+        border-radius: 5px; /* rounded corners */
+        }
+        #image-explanation {
+        padding: 10px; /* Add some padding to the text */
+        margin: 20px auto; /* Add some margin top and bottom and center it */
+        }
+        h1 {
+  font-size: 2rem; /* Larger text */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* center align the text */
+  margin-bottom: 20px; /* Add some margin bottom to separate from the explanation */
+}
+
+
+
+    </style>
+  </head>
+  <body>
+    <button id="explore-universe-button">Explore Universe</button>
+    <br />
+    <br />
+    <img id="nasa-image" src="" alt="NASA Image of the Day" />
+    <h1 style="text-align:center"> <span id="image-title"></span> </h1>
+    <div id="image-explanation"></div>
+    <script>
+      // Get the button,image and title elements
+      const button = document.getElementById("explore-universe-button");
+      const image = document.getElementById("nasa-image");
+      const title = document.getElementById("image-title");
+      // Add an event listener to the button to fetch a new image when clicked
+      button.addEventListener("click", function () {
+        fetch("https://api.nasa.gov/planetary/apod?api_key=vYk3Om6Yk2vwhFpOqY6Us4489JfutQoK3F7ECAPg")
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the image src with the url of the NASA image
+            image.src = data.url;
+            title.innerText = data.title ? data.title : "No Title";
+            // update the image explanation text
+            document.getElementById('image-explanation').innerText = data.explanation ? data.explanation : "No Explanation";
+          })
+          .catch((err) => {
+            console.log("An error occurred:",err);
+          });
+      });
+    </script>
+  </body>
+</html>
